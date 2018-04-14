@@ -1,0 +1,7 @@
+body {
+	background-color: black;
+}
+
+/* General Classes*/
+
+.padded { padding: 1.5em !important; }
