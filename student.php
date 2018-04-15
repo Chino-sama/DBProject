@@ -36,13 +36,34 @@
 	        		<tr>
 	        			<td><?=$student['student_id']?></td>
 	        			<td><?=$student['name']?></td>
-	        			<td>
+	        			<td class="right">
 	        				<form action='deleteStudent.php' method="post">
 								<input type="hidden" name="id" value="<?=$student['student_id']?>">
+								<input type="hidden" name="id" value="<?=$student['student_id']?>">
+	        					<a class="btn-link modal-trigger" href="#modal2"><i class='material-icons'>edit</i></a>
 								<button type="submit" class="btn-link"><i class='material-icons'>delete_forever</i></button>
 							</form>
 						</td>
 	        		</tr>
+	        		<div id="modal2" class="modal">
+						<form action="updateStudent.php" method="post">
+							<div class="modal-content">
+								<h4>Editar Alumno</h4>
+								<div class="input-field s6">
+									<input id="name" type="text" name="id" value="<?=$student['student_id']?>">
+									<label for="name">Matrícula</label>
+								</div>
+								<div class="input-field s6">
+									<input id="id" type="text" name="name" value="<?=$student['name']?>">
+									<label for="id">Nombre</label>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat swal-ok">Cancelar</a>
+								<button type="submit" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Guardar</button>
+							</div>
+						</form>
+					</div>
 	        	<?php		
 	        		}
 	        	 ?>
@@ -56,14 +77,14 @@
 	<form action="insertStudent.php" method="post">
 		<div class="modal-content">
 			<h4>Añadir Alumno</h4>
-				<div class="input-field s6">
-					<input id="name" type="text" name="name">
-					<label for="name">Nombre Completo</label>
-				</div>
-				<div class="input-field s6">
-					<input id="id" type="text" name="id">
-					<label for="id">Matrícula</label>
-				</div>
+			<div class="input-field s6">
+				<input id="id" type="text" name="id">
+				<label for="id">Matrícula</label>
+			</div>
+			<div class="input-field s6">
+				<input id="name" type="text" name="name">
+				<label for="name">Nombre Completo</label>
+			</div>
 		</div>
 		<div class="modal-footer">
 			<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat swal-ok">Cancelar</a>
