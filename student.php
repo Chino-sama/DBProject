@@ -36,11 +36,16 @@
 	        		<tr>
 	        			<td><?=$student['student_id']?></td>
 	        			<td><?=$student['name']?></td>
+	        			<td>
+	        				<form action='deleteStudent.php' method="post">
+								<input type="hidden" name="id" value="<?=$student['student_id']?>">
+								<button type="submit" class="btn-link"><i class='material-icons'>delete_forever</i></button>
+							</form>
+						</td>
 	        		</tr>
 	        	<?php		
 	        		}
 	        	 ?>
-
 	        </tbody>
     	</table>
 	</div>
