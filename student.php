@@ -25,8 +25,8 @@
 		<table class="striped">
 	        <thead>
 				<tr class="grey-text">
-					<th>NAME</th>
-					<th>STUDENT ID</th>
+					<th>MATRÍCULA</th>
+					<th>NOMBRE</th>
 				</tr>
 	        </thead>
 	        <tbody>
