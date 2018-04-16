@@ -19,11 +19,7 @@
 	<?php 
 		header("Content-Type: text/html; charset=UTF-8");
 		$conexion = new mysqli("localhost", 'root', '', 'ititDB');
-		if (!$conexion->set_charset("utf8")) {
-	        printf("Error loading character set utf8: %s\n", $conexion->error);
-	    } else {
-	        printf("Current character set: %s\n", $conexion->character_set_name());
-	    }
+		$conexion->set_charset("utf8");
 	?>	
 </body>
 </html>
