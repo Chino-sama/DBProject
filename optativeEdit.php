@@ -16,14 +16,14 @@
 <?php 
 	foreach ($res as $optative) {
 ?>	
-	<div class="row no-margin no-padding">
+	<form action="updateOptative.php" method="post" class="row no-margin no-padding">
 		<div class="card col s10 offset-s1 padded">
 			<div class="no-padding col s12">
 				<a id="goToOptative" class="btn-link"><i class="material-icons left">chevron_left</i>Volver</a>
 			</div>
 			<div class="input-field col s4">
 				<label for="#id">Clave</label>
-				<input id="id" type="text" name="optative_id" value="<?=$optative['optative_id']?>">
+				<input id="id" type="text" name="id" value="<?=$optative['optative_id']?>">
 			</div>
 			<div class="input-field col s4">
 				<label for="#name">Nombre</label>
@@ -31,13 +31,13 @@
 			</div>
 			&nbsp;&nbsp;&nbsp;
 			<div class="col s4 no-padding">
-				<button class="btn waves-effect right"><i class="material-icons left">edit</i>Editar</button>
+				<button type="submit" class="btn waves-effect right">Guardar Cambios</button>
 				<br>
 				<br>
 			</div>
 			<div class="divider col s12"></div>
 			<div class="row">
-				<h6 class="col s12">Objectivo</h6>
+				<h6 class="col s12">Objetivo</h6>
 				<div class="input-field col s12 no-margin">
 					<textarea class="materialize-textarea" name="objective"><?=$optative['objective']?></textarea>
 				</div>
@@ -47,19 +47,37 @@
 				</div>
 				<h6 class="col s12">Requerimientos</h6>
 				<?php 
-					if ($res2->num_rows > 0) {
-						foreach ($res2 as $req) {
+					foreach ($res2 as $req) {
 				?>	
 					<p class="col s12 no-margin-bottom"><?=$req['req_id']?>&nbsp;&nbsp;<?=$req['req_name']?></p>
 				<?php 
-						}
-					} else {
-						echo "<p class='col s12'> N/A </p>";
 					}
 				?>
+				<a class="col s2 modal-trigger" href="#modal1"><i class="material-icons left">add</i> Añadir Requerimiento</a>
 			</div>
 		</div>
+	</form>
+	<div id="modal1" class="modal">
+		<form action="insertReq.php" method="post">
+			<div class="modal-content">
+				<h4>Añadir Requerimiento</h4>
+				<input id="id" type="hidden" name="optative_id" value="<?=$optative['optative_id']?>">
+				<div class="input-field s6">
+					<input id="id" type="text" name="req_id">
+					<label for="id">Clave</label>
+				</div>
+				<div class="input-field s6">
+					<input id="name" type="text" name="name">
+					<label for="name">Nombre</label>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat swal-ok">Cancelar</a>
+				<button type="submit" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Guardar</button>
+			</div>
+		</form>
 	</div>
 <?php		
 	}
  ?>
+
