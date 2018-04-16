@@ -7,10 +7,9 @@
 		echo "<br> Error: " . $conexion->connect_error;
 	} else {
 		$id = $conexion->real_escape_string($_POST['id']);
+		$optId = $conexion->real_escape_string($_POST['opt_id']);
 		$name = $conexion->real_escape_string($_POST['name']);
-		$objective = $conexion->real_escape_string($_POST['objective']);
-		$scheme = $conexion->real_escape_string($_POST['scheme']);
-		$sql = "update optative set optative_id = '" . $id . "', name = '" . $name . "', objective = '" . $objective . "', scheme = '" . $scheme . "' where optative_id = '" . $id . "';";
+		$sql = "update requirement set req_id = '" . $id . "', req_name = '" . $name . "' where req_id = '" . $id . "';";
 		$conexion->query($sql);
 		$conexion->close();
 
@@ -18,12 +17,12 @@
 		<script>
 			swal({
 			  type: 'success',
-			  title: 'La materia optativa ha sido actualizada',
+			  title: 'El requerimiento ha sido actualizado',
 			  showConfirmButton: false,
 			  timer: 1500
 			});
 			setTimeout(function() {
-				window.location = '/DBProject/optativeDetail.php?id=" . $id . "';
+				window.location = '/DBProject/optativeEdit.php?id=" . $optId . "';
 			}, 1500);
 		</script>";
 	}

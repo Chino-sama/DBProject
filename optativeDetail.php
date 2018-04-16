@@ -38,10 +38,10 @@
 			</div>
 			<div class="divider col s12"></div>
 			<div class="row">
-				<h6 class="col s12">Objectivo</h6>
-				<p class="col s12"><?=$optative['objective']?></p>
+				<h6 class="col s12">Objetivo</h6>
+				<textarea disabled class="col s12 materialize-textarea black-text disabled-text"><?=$optative['objective']?></textarea>
 				<h6 class="col s12">Temario</h6>
-				<p class="col s12"><?=$optative['scheme']?></p>
+				<textarea disabled class="col s12 materialize-textarea black-text disabled-text"><?=$optative['scheme']?></textarea>
 				<h6 class="col s12">Requerimientos</h6>
 				<?php 
 					if ($res2->num_rows > 0) {

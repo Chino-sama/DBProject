@@ -22,3 +22,8 @@ body {
 	color: #03a9f4;
 	cursor: pointer;
 }
+
+/* Inputs */
+
+.disabled-text { padding-bottom: 1em !important; }
+
