@@ -11,8 +11,8 @@
 	}
 ?>
 
-<div class="row">	
-	<div class="card col s10 offset-s1 padded">
+<div class="row with-sidenav">	
+	<div class="card col s12 padded">
 		<div class="row col s12 no-padding no-margin">
 			<h5 class="col s8 no-margin-top no-padding">Optativas</h5>
 			<div class="col s4 no-padding">
