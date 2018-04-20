@@ -1,31 +1,30 @@
 <?php
 	require 'index.php';
-	require 'sessionInit.php'; 
+	require 'sessionInit.php';
 	
 	if($conexion->connect_errno) {
 		echo "<br> No pues no se conecto";
 		echo "<br> Error: " . $conexion->connect_erno;
 		echo "<br> Error: " . $conexion->connect_error;
 	} else {
-		$id = $conexion->real_escape_string($_POST['id']);
-		$name = $conexion->real_escape_string($_POST['name']);
+		$optative = $conexion->real_escape_string($_POST['optative']);
+		$type = $conexion->real_escape_string($_POST['type']);
 		
-		$sql = "insert into student values ('$id', '$name');";
+		$sql = "update optative set type=" . $type . " where name='" . $optative . "';";
 		$conexion->query($sql);
+
 		$conexion->close(); 
 	} 	
 	echo "
 		<script>
 			swal({
 			  type: 'success',
-			  title: 'El alumno ha sido guardado!',
+			  title: 'La materia optativa se ha modificado!',
 			  showConfirmButton: false,
 			  timer: 1500
 			});
 			setTimeout(function() {
-				window.location = '/DBProject/student.php';
+				window.location = '/DBProject/enrollment.php?';
 			}, 1500);
 		</script>";
-	// header("Location: student.php");
-	// exit();
 ?>

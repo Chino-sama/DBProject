@@ -1,5 +1,6 @@
 <?php
-	require 'index.php'; 
+	require 'index.php';
+	require 'sessionInit.php';
 	
 	if ($conexion->connect_errno) {
 		echo "<br> No pues no se conecto";

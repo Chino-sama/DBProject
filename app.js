@@ -3,5 +3,8 @@ $(document).ready(function() {
 	$('#goToOptative').click(function() {
 		window.location = '/DBProject/optative.php';
 	});
+	$('select').formSelect();
+	$( "#wa" ).change(function() {
+		alert('wa');
+	});
 });
-
