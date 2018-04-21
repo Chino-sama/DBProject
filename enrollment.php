@@ -129,6 +129,9 @@
 		<div class="card col s10 offset-s1 padded">
 			<div class="row col s12 no-padding no-margin">
 				<h5 class="col s8 no-margin-top no-padding">Optativas</h5>
+				<div class="col s4 no-padding">
+					<a class="waves-effect waves-effect btn modal-trigger right" href="#modal1">Inscribir</a>
+				</div>
 				<br>
 				<br>
 			</div>
@@ -141,8 +144,26 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php 
-						foreach ($res as $optative) {
+					<?php
+						$myOpts = "SELECT * FROM enrollment where status is null;";
+						$myOptatives = $conexion->query($myOpts);
+ 
+						$block1 = "SELECT * FROM optative where block=1;";
+						$block2 = "SELECT * FROM optative where block=2;";
+						$block3 = "SELECT * FROM optative where block=3;";
+						$b1 = $conexion->query($block1);
+						$b2 = $conexion->query($block2);
+						$b3 = $conexion->query($block3);
+						$studentOpts = "SELECT * FROM enrollment where student_id = '$id';";
+						$studentOptatives = $conexion->query($studentOpts);
+						if($studentOptatives->num_rows == 0){
+							$wa = $b1;
+						} else if($studentOptatives->num_rows == 2) {
+							$studentOpts = "SELECT * FROM optative where block = 2 or (optative_id not in (SELECT optative_id from enrollment where student_id = '$id') and block = 1);";
+							$studentOptatives = $conexion->query($studentOpts);
+						}
+
+						foreach ($myOptatives as $optative) {
 					?>
 						<tr>
 							<td>
@@ -155,6 +176,7 @@
 						</tr>
 					<?php		
 						}
+
 					?>
 				</tbody>
 			</table>
