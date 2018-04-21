@@ -35,6 +35,7 @@
 				</thead>
 				<tbody>
 					<?php 
+						$count = 1;
 						foreach ($res as $optative) {
 					?>
 						<tr>
@@ -46,10 +47,10 @@
 							</td>
 							<td><?=$optative['name']?></td>
 							<td class="right">
-								<a class="btn-link modal-trigger" href="#modal2"><i class='material-icons'>mode_edit</i></a>
+								<a class="btn-link modal-trigger" href="#modal<?=$count?>"><i class='material-icons'>mode_edit</i></a>
 							</td>
 						</tr>
-						<div id="modal2" class="modal">
+						<div id="modal<?=$count?>" class="modal">
 							<form action="editOptativeEnrollment.php" method="post">
 								<div class="modal-content">
 									<h4>Editar Optativa</h4>
@@ -75,7 +76,8 @@
 								</div>
 							</form>
 						</div>
-					<?php		
+					<?php
+						$count++;		
 						}
 					?>
 				</tbody>

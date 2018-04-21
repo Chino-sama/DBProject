@@ -32,6 +32,7 @@
 	        </thead>
 	        <tbody>
 	        	<?php 
+	        		$count = 1;
 	        		foreach ($res as $student) {
 	        	?>
 	        		<tr>
@@ -41,12 +42,12 @@
 	        				<form action='deleteStudent.php' method="post">
 								<input type="hidden" name="id" value="<?=$student['student_id']?>">
 								<input type="hidden" name="id" value="<?=$student['student_id']?>">
-	        					<a class="btn-link modal-trigger" href="#modal2"><i class='material-icons'>edit</i></a>
+	        					<a class="btn-link modal-trigger" href="#modal<?=$count?>"><i class='material-icons'>edit</i></a>
 								<button type="submit" class="btn-link"><i class='material-icons'>delete_forever</i></button>
 							</form>
 						</td>
 	        		</tr>
-	        		<div id="modal2" class="modal">
+	        		<div id="modal<?=$count?>" class="modal">
 						<form action="updateStudent.php" method="post">
 							<div class="modal-content">
 								<h4>Editar Alumno</h4>
@@ -65,9 +66,10 @@
 							</div>
 						</form>
 					</div>
-	        	<?php		
-	        		}
-	        	 ?>
+	        	<?php
+					$count++;		
+					}
+				?>
 	        </tbody>
     	</table>
 	</div>
