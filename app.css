@@ -16,6 +16,7 @@ html {
 
 .full-width { width: 100%; }
 .full-height { height: 100%; }
+.absolute { position: absolute; }
 
 /* Buttons */
 
@@ -24,6 +25,17 @@ html {
 	background-color: transparent !important;
 	color: #03a9f4;
 	cursor: pointer;
+}
+
+.fixed-action-btn{
+	position: absolute;
+	top: 0px;
+	right: 5px;
+}
+
+.fixed-action-btn.direction-left ul {
+	right: 36px;
+	top: -8px;
 }
 
 /* Inputs */
@@ -35,3 +47,4 @@ html {
 .sidenav { width: 220px; }
 .with-sidenav { margin-left: 270px; }
 
+.swal2-content .select-wrapper { display: none; }

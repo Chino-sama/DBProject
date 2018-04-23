@@ -18,7 +18,7 @@
 	<div class="row">	
 		<div class="card col s10 offset-s1 padded">
 			<div class="row col s12 no-padding no-margin">
-				<h5 class="col s8 no-margin-top no-padding">Optativas</h5>
+				<h5 class="col s8 no-margin-top no-padding">Abrir Grupos</h5>
 				<div class="col s4 no-padding">
 					<a class="waves-effect waves-effect btn modal-trigger right" href="#addModal">Añadir Optativa</a>
 				</div>
@@ -41,7 +41,7 @@
 					?>
 						<tr>
 							<td>
-								<form action='optativeDetail.php' method="get">
+								<form action='goToEnrollmentDetail.php' method="get">
 									<input type="hidden" name="id" value="<?=$optative['optative_id']?>">
 									<button type="submit" class="btn-link"><?=$optative['optative_id']?></button>
 								</form>
@@ -136,13 +136,18 @@
 	</div>
 <?php
 	} else {
+		$maxSql = "SELECT * FROM enrollment where student_id= '$id';";
+		$max = $conexion->query($maxSql);
 ?>
 	<div class="row">	
 		<div class="card col s10 offset-s1 padded">
 			<div class="row col s12 no-padding no-margin">
 				<h5 class="col s8 no-margin-top no-padding">Optativas</h5>
 				<div class="col s4 no-padding">
-					<a class="waves-effect waves-effect btn modal-trigger right" href="#addModal">Inscribir</a>
+					<a class="waves-effect waves-effect btn modal-trigger right <?php
+							if ($max->num_rows == 2)
+								echo "disabled";
+						?>" href="#addModal">Inscribir</a>
 				</div>
 				<br>
 				<br>
@@ -150,12 +155,12 @@
 			<div class="divider col s12"></div>
 			
 			<?php
-				$myOpts = "SELECT enrollment.*, name FROM enrollment JOIN optative using(optative_id) where enrollment.status is null;";
+				$myOpts = "SELECT enrollment.*, name FROM enrollment JOIN optative using(optative_id) where enrollment.status is null and student_id = '$id';";
 				$myOptatives = $conexion->query($myOpts);
 
-				$block1 = "SELECT * FROM optative where block=1 and type is not null;";
-				$block2 = "SELECT * FROM optative where block=2 and type is not null;";
-				$block3 = "SELECT * FROM optative where block=3 and type is not null;";
+				$block1 = "SELECT * FROM optative where block=1 and type is not null and optative_id not in (SELECT optative_id from enrollment where student_id = '$id');";
+				$block2 = "SELECT * FROM optative where block=2 and type is not null and optative_id not in (SELECT optative_id from enrollment where student_id = '$id');";
+				$block3 = "SELECT * FROM optative where block=3 and type is not null and optative_id not in (SELECT optative_id from enrollment where student_id = '$id');";
 				$b1 = $conexion->query($block1);
 				$b2 = $conexion->query($block2);
 				$b3 = $conexion->query($block3);

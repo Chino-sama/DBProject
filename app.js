@@ -7,4 +7,8 @@ $(document).ready(function() {
 	$( "#wa" ).change(function() {
 		alert('wa');
 	});
+	$('.fixed-action-btn').floatingActionButton({
+		direction:'left',
+		hoverEnabled: false
+	});
 });
