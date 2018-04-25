@@ -1,6 +1,24 @@
 <?php
 	require 'index.php';
 	require 'sessionInit.php';
+	
+	function array_diff_assoc_recursive($array1, $array2) {
+		$difference=array();
+		foreach($array1 as $key => $value) {
+			if( is_array($value) ) {
+				if( !isset($array2[$key]) || !is_array($array2[$key]) ) {
+					$difference[$key] = $value;
+				} else {
+					$new_diff = array_diff_assoc_recursive($value, $array2[$key]);
+					if( !empty($new_diff) )
+						$difference[$key] = $new_diff;
+				}
+			} else if( !array_key_exists($key,$array2) || $array2[$key] !== $value ) {
+				$difference[$key] = $value;
+			}
+		}
+		return $difference;
+	}
 
 	if ($conexion->connect_errno) {
 		echo "<br> No pues no se conectó";
@@ -136,7 +154,7 @@
 	</div>
 <?php
 	} else {
-		$maxSql = "SELECT * FROM enrollment where student_id= '$id';";
+		$maxSql = "SELECT * FROM enrollment where student_id= '$id' and status is null;";
 		$max = $conexion->query($maxSql);
 ?>
 	<div class="row">	
@@ -159,18 +177,60 @@
 				$myOptatives = $conexion->query($myOpts);
 
 				$block1 = "SELECT * FROM optative where block=1 and type is not null and optative_id not in (SELECT optative_id from enrollment where student_id = '$id');";
-				$block2 = "SELECT * FROM optative where block=2 and type is not null and optative_id not in (SELECT optative_id from enrollment where student_id = '$id');";
-				$block3 = "SELECT * FROM optative where block=3 and type is not null and optative_id not in (SELECT optative_id from enrollment where student_id = '$id');";
 				$b1 = $conexion->query($block1);
-				$b2 = $conexion->query($block2);
-				$b3 = $conexion->query($block3);
 				$studentOpts = "SELECT * FROM enrollment where student_id = '$id';";
 				$studentOptatives = $conexion->query($studentOpts);
 				if($studentOptatives->num_rows == 0 || $studentOptatives->num_rows == 1){
 					$studentOptatives = $b1;
-				} else if($studentOptatives->num_rows == 2) {
-					$studentOpts = "SELECT * FROM optative where (block = 2 or block = 1) and type is not null and optative_id not in (SELECT optative_id from enrollment where student_id = '$id');";
+				} else if($studentOptatives->num_rows == 2 || $studentOptatives->num_rows == 3) {
+					$studentOpts = "SELECT * FROM optative where (block = 1 or block = 2) and type is not null and optative_id not in (SELECT optative_id from enrollment where student_id = '$id');";
 					$studentOptatives = $conexion->query($studentOpts);
+				} else {
+					$studentOpts = "SELECT * FROM optative where type is not null and optative_id not in (SELECT optative_id from enrollment where student_id = '$id');";
+					$studentOptatives = $conexion->query($studentOpts);
+				}
+				$studentOpts = [];
+				foreach ($studentOptatives as $opt) {
+					$studentOpts[] = $opt;
+				}
+				foreach ($studentOpts as $opt) {
+					$opt_id = $opt['optative_id'];
+					$requirement = "SELECT * FROM requirement where optative_id = '$opt_id';";
+					$requirements = $conexion->query($requirement);
+					if($requirements != NULL){
+						$allReqs = [];
+						$reqOptatives = [];
+						foreach ($requirements as $req) {
+							$allReqs[] = $req;
+							$req_id = $req['req_id'];
+							$reqOptative = "SELECT optative_id FROM optative where optative_id = '$req_id';";
+							$reqOpt = $conexion->query($reqOptative);
+							if($reqOpt->num_rows != 0){
+								$reqOptatives[] = $req;
+							}
+						}
+						$reqs = array_diff_assoc_recursive($allReqs, $reqOptatives);
+						if(empty($reqs) && empty($reqOptatives)){
+							$studentOpts['reqs'] = 0;
+						}
+						if(!empty($reqs)) {
+							$studentOpts['reqs'] = 1;
+						}
+						if(!empty($reqOptatives)){
+							$satisfies = [];
+							foreach($reqOptatives as $req){
+								$reqOpt_id = $req['req_id'];
+								$wa = "SELECT * FROM enrollment where student_id = '$id' and optative_id = '$reqOpt_id' and status = 1;";
+								$wo = $conexion->query($wa);
+								foreach ($wo as $i) {
+									$satisfies[] = $i;
+								}
+							}
+							if(count($reqOptatives >= $satisfies && $satisfies > 0)){
+								$studentOpts['reqs'] = 0;
+							}
+						}
+					}
 				}
 			?>
 			<div id="addModal" class="modal">
