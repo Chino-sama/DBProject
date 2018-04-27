@@ -1,21 +1,30 @@
 <?php
 	require 'index.php';
-	require 'sessionInit.php';
+	require 'side-nav.php';
 
 	if ($conexion->connect_errno) {
 		echo "<br> No pues no se conectó";
 		echo "<br> Error: " . $conexion->connect_erno;
 		echo "<br> Error: " . $conexion->connect_error;
 	} else {
-
 		$opt_id = $_GET['id'];
-		$sql = "SELECT enrollment.*, name FROM enrollment JOIN student using(student_id) WHERE optative_id = '$opt_id' ORDER BY student_id";
+		$type = $_GET['type'];
+		$sql = "SELECT enrollment.*, name FROM enrollment JOIN student using(student_id) WHERE optative_id = '$opt_id' and type = '$type' ORDER BY student_id";
 		$res = $conexion->query($sql);
+		$sql2 = "SELECT * from optative where optative_id = '$opt_id'";
+		$res2 = $conexion->query($sql2);
 	}
+	foreach ($res2 as $optative) {		
 ?>
 
 <div class="row">
-	<div class="col s10 offset-s1 card">
+	<div class="col s10 offset-s1 card padded">
+		<h5><?=$optative['name']?> - <?php  
+			if ($type == 0) 
+				echo "FIT";
+			elseif ($type == 1) 
+				echo "Presencial";
+		?></h5>
 		<table class="striped">
 			<thead>
 				<tr class="grey-text">
@@ -106,3 +115,7 @@
 		</div>
 	</form>
 </div>
+
+<?php 
+	}
+?>

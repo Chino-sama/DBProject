@@ -8,9 +8,10 @@
 		echo "<br> Error: " . $conexion->connect_error;
 	} else {
 		$id = $conexion->real_escape_string($_GET['id']);
+		$type = $conexion->real_escape_string($_GET['type']);
 	}	
 	echo "
 		<script>			
-				window.location = '/DBProject/enrollmentDetail.php?id=" . $id . "';
+				window.location = '/DBProject/enrollmentDetail.php?id=" . $id . "&type=" . $type . "';
 		</script>";
 ?>

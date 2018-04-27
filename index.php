@@ -21,11 +21,5 @@
 		$conexion = new mysqli("localhost", 'root', '', 'ititDB');
 		$conexion->set_charset("utf8");
 	?>
-	<div class='row'>
-		<a href="optative.php">Optativas</a>
-		<a href="student.php">Alumnos</a>
-		<a href="enrollment.php">Inscripción</a>
-		<a href="signout.php">Cerrar sesión</a>
-	</div>	
 </body>
 </html>

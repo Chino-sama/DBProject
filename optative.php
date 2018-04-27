@@ -1,6 +1,7 @@
 <?php
 	require 'index.php';
-	require 'sessionInit.php';
+	require 'side-nav.php';
+
 
 	if ($conexion->connect_errno) {
 		echo "<br> No pues no se conectó";

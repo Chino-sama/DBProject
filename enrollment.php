@@ -1,6 +1,6 @@
 <?php
 	require 'index.php';
-	require 'sessionInit.php';
+	require 'side-nav.php';
 	
 	function array_diff_assoc_recursive($array1, $array2) {
 		$difference=array();
@@ -56,24 +56,28 @@
 					<?php 
 						$count = 1;
 						foreach ($res as $optative) {
+							$type = $optative['type'];
+							if ($type == 0) 
+								$nType = array("FIT");
+							elseif ($type == 1) 
+								$nType = array("Presencial");
+							elseif ($type == 2)
+								$nType = array(0 => 'FIT', 1 => 'Presencial');
+						foreach($nType as $key => $typ) {
+
 					?>
 						<tr>
 							<td>
 								<form action='goToEnrollmentDetail.php' method="get">
 									<input type="hidden" name="id" value="<?=$optative['optative_id']?>">
+									<input type="hidden" name="type" value="<?=$key?>">
 									<button type="submit" class="btn-link"><?=$optative['optative_id']?></button>
 								</form>
 							</td>
 							<td><?=$optative['name']?></td>
 							<td>
 								<?php  
-									$type = $optative['type'];
-									if ($type == 0) 
-										echo "FIT";
-									elseif ($type == 1) 
-										echo "Presencial";
-									elseif ($type == 2)
-										echo "FIT y Presencial";
+									echo $typ;
 								?>
 							</td>
 							<td class="right">
@@ -107,7 +111,8 @@
 							</form>
 						</div>
 					<?php
-						$count++;		
+							$count++;	
+							}	
 						}
 					?>
 				</tbody>
