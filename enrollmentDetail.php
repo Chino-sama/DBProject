@@ -50,28 +50,28 @@
 												echo "clear";
 										?></i>
 									</a>
-										<ul>
-											<li>
-												<form action="editStudentEnrollment.php" method="post">
-													<input type="hidden" name="student_id" value="<?=$student['student_id']?>">
-													<input type="hidden" name="status" value='1'>
-													<input type="hidden" name="optative_id" value='<?=$opt_id?>'>
-													<button class="btn-floating btn-small green">
-														<i class="material-icons">check</i>
-													</button>
-												</form>
-											</li>
-											<li>
-												<form action="editStudentEnrollment.php" method="post">
-													<input type="hidden" name="student_id" value="<?=$student['student_id']?>">
-													<input type="hidden" name="status" value="0">
-													<input type="hidden" name="optative_id" value='<?=$opt_id?>'>
-													<button class="btn-floating btn-small red">
-														<i class="material-icons">clear</i>
-													</button>
-												</form>
-											</li>
-										</ul>
+									<ul>
+										<li>
+											<form action="editStudentEnrollment.php" method="post">
+												<input type="hidden" name="student_id" value="<?=$student['student_id']?>">
+												<input type="hidden" name="status" value='1'>
+												<input type="hidden" name="optative_id" value='<?=$opt_id?>'>
+												<button class="btn-floating btn-small green">
+													<i class="material-icons">check</i>
+												</button>
+											</form>
+										</li>
+										<li>
+											<form action="editStudentEnrollment.php" method="post">
+												<input type="hidden" name="student_id" value="<?=$student['student_id']?>">
+												<input type="hidden" name="status" value="0">
+												<input type="hidden" name="optative_id" value='<?=$opt_id?>'>
+												<button class="btn-floating btn-small red">
+													<i class="material-icons">clear</i>
+												</button>
+											</form>
+										</li>
+									</ul>
 								</div>
 							</div>
 							<form action='deleteStudentEnrollment.php' method="post">

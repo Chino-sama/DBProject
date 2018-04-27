@@ -190,6 +190,7 @@
 					$studentOptatives = $conexion->query($studentOpts);
 				}
 				$studentOpts = [];
+				$trueStudentOpts=[];
 				foreach ($studentOptatives as $opt) {
 					$studentOpts[] = $opt;
 				}
@@ -210,27 +211,10 @@
 							}
 						}
 						$reqs = array_diff_assoc_recursive($allReqs, $reqOptatives);
-						if(empty($reqs) && empty($reqOptatives)){
-							$studentOpts['reqs'] = 0;
-						}
-						if(!empty($reqs)) {
-							$studentOpts['reqs'] = 1;
-						}
-						if(!empty($reqOptatives)){
-							$satisfies = [];
-							foreach($reqOptatives as $req){
-								$reqOpt_id = $req['req_id'];
-								$wa = "SELECT * FROM enrollment where student_id = '$id' and optative_id = '$reqOpt_id' and status = 1;";
-								$wo = $conexion->query($wa);
-								foreach ($wo as $i) {
-									$satisfies[] = $i;
-								}
-							}
-							if(count($reqOptatives >= $satisfies && $satisfies > 0)){
-								$studentOpts['reqs'] = 0;
-							}
-						}
-					}
+					} 
+					$opt['reqOptatives'] = $reqOptatives;
+					$opt['reqs'] = $reqs;
+					$trueStudentOpts[] = $opt;
 				}
 			?>
 			<div id="addModal" class="modal">
@@ -239,10 +223,10 @@
 						<h4>Inscribir</h4>
 						<div class="row">
 							<div class="input-field col s12">
-								<select name="optative" class="browser-default">
+								<select id="optativeReqs" name="optative" class="browser-default">
 									<option value="" selected>Choose your option</option>
 									<?php
-										foreach ($studentOptatives as $opt) {
+										foreach ($trueStudentOpts as $opt) {
 											$type = $opt['type'];
 											if ($type == 0) 
 												$nType = array("FIT");
@@ -250,29 +234,68 @@
 												$nType = array("Presencial");
 											elseif ($type == 2)
 												$nType = array(0 => 'FIT', 1 => 'Presencial');
-											
-											if ($type == 2) {
-												foreach ($nType as $key => $nType) {
-									?>
-												<option value="<?=$key . $opt['optative_id']?>"><?=$opt['name']?> - <?=$nType?></option> 
-									<?php		
-												}
+											$nReqs = 0;
+											$optReqs = $opt['reqOptatives'];
+											foreach($optReqs as $req) {
+												$reqId = $req['req_id'];
+												$sql = "SELECT * from enrollment where student_id = '$id' and req_id = '$reqId;";
+												$numReqs = $conexion->query($sql);
+												$nReqs = $numReqs->num_rows;
 											}
-											else {
+											if (!empty($opt['reqOptatives']) && empty($opt['reqs'])|| $nReqs == count($opt['reqOptatives'])) {
+												if ($type == 2) {
+													foreach ($nType as $key => $nType) {
 									?>
-												<option value="<?=key($nType) . $opt['optative_id']?>"><?=$opt['name']?> - <?=$nType[0]?></option> 
+													<option value="<?=$key . $opt['optative_id']?>"><?=$opt['name']?> - <?=$nType?></option>
+									<?php		
+													}
+												}
+												else {
+									?>
+													<option value="<?=key($nType) . $opt['optative_id']?>"><?=$opt['name']?> - <?=$nType[0]?></option> 
 									<?php			
+												}
+											} else if (!empty($opt['reqs'])) {
+												if ($type == 2) {
+													foreach ($nType as $key => $nType) {
+									?>
+													<option value="<?=$key . $opt['optative_id']?>"><?=$opt['name']?> - <?=$nType?></option>
+									<?php		
+													}
+												}
+												else {
+									?>
+													<option value="<?=key($nType) . $opt['optative_id']?>"><?=$opt['name']?> - <?=$nType[0]?></option> 
+									<?php			
+												}
 											}
 										}
 									?>
 								</select>
 								<label class="active">Optativa</label>
 							</div>
-						</div>
+							<?php
+								foreach ($trueStudentOpts as $opt) {
+									$optReqs = $opt['reqs'];
+									foreach($optReqs as $req) {
+							?>
+									<input id="reqOptId" type="hidden" value="<?=$req['optative_id']?>">
+									<input disabled id="reqId" type="text" class="col s10 offset-s1 black-text" value="<?=$req['req_name']?>" style="display: none;">
+									<p id="checkReq" class="col s1" style="display: none;">
+										<label>
+											<input id="<?=$req['optative_id']?>" type="checkbox" onclick="checkReqs()">
+											<span></span>
+										</label>
+									</p>
+							<?php		
+									}
+								}
+							?>
+							</div>
 					</div>
 					<div class="modal-footer">
 						<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat swal-ok">Cancelar</a>
-						<button type="submit" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Inscribir</button>
+						<button id="reqBtn" type="submit" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Inscribir</button>
 					</div>
 				</form>
 			</div>
