@@ -18,7 +18,14 @@
 		<div class="row col s12 no-padding no-margin">
 			<h5 class="col s8 no-margin-top no-padding">Optativas</h5>
 			<div class="col s4 no-padding">
+				<?php
+					$id = $_SESSION['id'];
+					if($id[0] == 'L' || $id[0] == 'l') {
+				?>
 				<a class="waves-effect waves-effect btn modal-trigger right" href="#modal1">Añadir Optativa</a>
+				<?php
+					}
+				?>
 			</div>
 			<br>
 			<br>
@@ -43,12 +50,19 @@
 	        				</form>
 	        			</td>
 	        			<td><?=$optative['name']?></td>
-	        			<td class="right">
-	        				<form action='deleteOptative.php' method="post">
-								<input type="hidden" name="id" value="<?=$optative['optative_id']?>">
-								<button type="submit" class="btn-link"><i class='material-icons'>delete_forever</i></button>
-							</form>
-						</td>
+	        			<?php
+							$id = $_SESSION['id'];
+							if($id[0] == 'L' || $id[0] == 'l') {
+						?>
+							<td class="right">
+		        				<form action='deleteOptative.php' method="post">
+									<input type="hidden" name="id" value="<?=$optative['optative_id']?>">
+									<button type="submit" class="btn-link"><i class='material-icons'>delete_forever</i></button>
+								</form>
+							</td>
+						<?php
+							}
+						?>
 	        		</tr>
 	        	<?php		
 	        		}

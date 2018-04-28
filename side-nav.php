@@ -9,11 +9,11 @@
 			<?php
 				if($id[0] == 'L' || $id[0] == 'l') {
 			?>
-				<li><a href="optative.php">Optativas</a></li>
 				<li><a href="student.php">Alumnos</a></li>
 			<?php
 				}
 			?>
+			<li><a href="optative.php">Optativas</a></li>
 			<li><a href="enrollment.php">Inscripción</a></li>
 			<li><a href="signout.php">Cerrar sesión</a></li>
 		</ul>

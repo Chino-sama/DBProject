@@ -10,6 +10,10 @@
 		$sql = "SELECT * FROM student ORDER BY student_id";
 		$res = $conexion->query($sql);
 	}
+	$id = $_SESSION['id'];
+	if($id[0] == 'A' || $id[0] == 'a') {
+		header( "Location: enrollment.php");
+	}
 ?>
 
 <div class="row">	

@@ -164,6 +164,15 @@
 ?>
 	<div class="row">	
 		<div class="card col s10 offset-s1 padded">
+			<?php
+				$change = "SELECT * from optative_changes where optative_id in (select optative_id from enrollment where student_id = '$id') order by id desc limit 2;";
+				$changes = $conexion->query($change);
+				foreach ($changes as $change) {
+					echo $change['description'];
+					echo '<br>';
+					echo '<br>';
+				}
+			?>
 			<div class="row col s12 no-padding no-margin">
 				<h5 class="col s8 no-margin-top no-padding">Optativas</h5>
 				<div class="col s4 no-padding">

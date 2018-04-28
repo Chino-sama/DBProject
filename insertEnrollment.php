@@ -14,7 +14,7 @@
 		$sql = "insert into enrollment values ('$student_id', '$opt_id', NULL, '$type');";
 		$conexion->query($sql);
 		$conexion->close(); 
-	} 	
+	}
 	echo "
 		<script>
 			swal({

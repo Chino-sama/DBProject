@@ -24,7 +24,11 @@
 			</div>
 			<h5 class="no-margin-top col s8"><?=$optative['optative_id']?>&nbsp;&nbsp;&nbsp;<?=$optative['name']?></h5>
 			<div class="col s4 no-padding">
-				<button id="goToEditOpt" class="btn waves-effect right"><i class="material-icons left">edit</i>Editar</button>
+				<?php
+					$id = $_SESSION['id'];
+					if($id[0] == 'L' || $id[0] == 'l') {
+				?>
+					<button id="goToEditOpt" class="btn waves-effect right"><i class="material-icons left">edit</i>Editar</button>
 				<?php 
 					echo "<script>
 						$(document).ready(function() {
@@ -34,6 +38,10 @@
 						});
 					</script>"
 				?>
+				<?php
+					}
+				?>
+				
 				<br>
 				<br>
 			</div>
